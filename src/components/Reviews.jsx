@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
+import { getReviews } from "../utils/api";
 const Reviews = () => {
 	const [reviews, setReviews] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		axios
-			.get("https://nc-games-8s4d.onrender.com/api/reviews")
+		getReviews()
 			.then((response) => {
 				setReviews(response.data.reviews);
 				setIsLoading(false);
