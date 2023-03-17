@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getReviewById } from "../utils/api.js";
+import Comments from "./Comments";
 
 const SingleReview = (props) => {
 	const [singleReview, setSingleReview] = useState({});
@@ -47,6 +48,8 @@ const SingleReview = (props) => {
 					</div>
 
 					<h3>Comments:</h3>
+					<Comments review_id={review_id} />
+
 					<Link to={`/api/reviews/${singleReview.review_id}/comments`}>
 						Check out the comments for this review here! <br></br> So far we
 						have {singleReview.comment_count}, why don't you say your piece?
