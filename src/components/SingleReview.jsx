@@ -5,17 +5,25 @@ import { getReviewById } from "../utils/api.js";
 
 const SingleReview = (props) => {
 	const [singleReview, setSingleReview] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 	const { review_id } = useParams();
 
 	useEffect(() => {
+		setIsLoading(true);
 		getReviewById(review_id)
 			.then(({ data }) => {
 				setSingleReview(data.review);
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				console.error("Error fetching review:", error);
+				setIsLoading(false);
 			});
 	}, [review_id]);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<section className="list">
