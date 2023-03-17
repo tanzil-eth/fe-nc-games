@@ -1,60 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getReviewById } from "../utils/api.js";
-
-const SingleReview = (props) => {
-	const [singleReview, setSingleReview] = useState({});
+import { getReviews } from "../utils/api";
+const Reviews = () => {
+	const [reviews, setReviews] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const { review_id } = useParams();
 
 	useEffect(() => {
-		setIsLoading(true);
-		getReviewById(review_id)
-			.then(({ data }) => {
-				setSingleReview(data.review);
+		getReviews()
+			.then((response) => {
+				setReviews(response.data.reviews);
 				setIsLoading(false);
 			})
 			.catch((error) => {
-				console.error("Error fetching review:", error);
+				console.error("Error fetching reviews:", error);
 				setIsLoading(false);
 			});
-	}, [review_id]);
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
+	}, []);
 
 	return (
-		<section className="list">
-			<ul className="largeBox">
-				<li>
-					<h2>{singleReview.title}</h2>
-					<h3>Author:{singleReview.owner}</h3>
-					<img
-						className="imageLeft"
-						src={singleReview.review_img_url}
-						alt={singleReview.title}
-					/>
-					<h3>About the Game:</h3>
-					<p>Category: {singleReview.category}</p>
-					<p>Designer: {singleReview.designer}</p>
-					<p>Votes: {singleReview.votes}</p>
-					<div className="reviewBodyBox">
-						<strong>Review:</strong>
-						<br></br>
-						{singleReview.review_body}
-					</div>
-
-					<h3>Comments:</h3>
-					<Link to={`/api/reviews/${singleReview.review_id}/comments`}>
-						Check out the comments for this review here! <br></br> So far we
-						have {singleReview.comment_count}, why don't you say your piece?
-					</Link>
-				</li>
-			</ul>
-		</section>
+		<div>
+			<h2>Reviews</h2>
+			{isLoading ? (
+				<p>Loading reviews...</p>
+			) : (
+				<section>
+					<ul className="list">
+						{reviews.map((review) => (
+							<div className="box" key={review.review_id}>
+								<li>
+									<h2 className="reviewTitle">{review.title}</h2>
+									<img
+										src={review.review_img_url}
+										alt={review.review_title}
+										width="150px"
+										height="150px"
+									/>
+									<p className="category">Category: {review.category}</p>
+									<p>Author: {review.owner}</p>
+									<div>Date Posted: {review.created_at}</div>
+									<p>Votes: {review.votes}</p>
+									<Link to={`/reviews/${review.review_id}`}>
+										<button className="button">Read More...</button>
+									</Link>
+								</li>
+							</div>
+						))}
+					</ul>
+				</section>
+			)}
+		</div>
 	);
 };
 
-export default SingleReview;
+export default Reviews;
