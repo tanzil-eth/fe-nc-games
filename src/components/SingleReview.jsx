@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { getReviewById } from "../utils/api.js";
+import Comments from "./Comments.jsx";
+import Votes from "./Votes.jsx";
 
 const SingleReview = (props) => {
 	const [singleReview, setSingleReview] = useState({});
@@ -39,18 +40,14 @@ const SingleReview = (props) => {
 					<h3>About the Game:</h3>
 					<p>Category: {singleReview.category}</p>
 					<p>Designer: {singleReview.designer}</p>
-					<p>Votes: {singleReview.votes}</p>
+					<Votes review_id={review_id} votes={singleReview.votes} />
 					<div className="reviewBodyBox">
 						<strong>Review:</strong>
-						<br></br>
+						<br />
 						{singleReview.review_body}
 					</div>
-
 					<h3>Comments:</h3>
-					<Link to={`/api/reviews/${singleReview.review_id}/comments`}>
-						Check out the comments for this review here! <br></br> So far we
-						have {singleReview.comment_count}, why don't you say your piece?
-					</Link>
+					<Comments review_id={review_id} />
 				</li>
 			</ul>
 		</section>

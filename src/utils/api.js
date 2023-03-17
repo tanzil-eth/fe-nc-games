@@ -9,3 +9,11 @@ export const getReviews = () => {
 export const getReviewById = (review_id) => {
 	return axios.get(`${API_URL}/reviews/${review_id}`);
 };
+
+export const getCommentsForReview = (review_id) => {
+	return axios.get(`${API_URL}/reviews/${review_id}/comments`);
+};
+
+export const patchReviewVotes = (review_id, inc_votes) => {
+	return axios.patch(`${API_URL}/reviews/${review_id}`, { inc_votes });
+};
