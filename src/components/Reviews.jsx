@@ -39,7 +39,7 @@ const Reviews = () => {
 									<p>Author: {review.owner}</p>
 									<div>Date Posted: {review.created_at}</div>
 									<p>Votes: {review.votes}</p>
-									<Link to={`/api/reviews/${review.review_id}`}>
+									<Link to={`/reviews/${review.review_id}`}>
 										<button className="button">Read More...</button>
 									</Link>
 								</li>

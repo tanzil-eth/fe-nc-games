@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Reviews from "./components/Reviews";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
+import SingleReview from "./components/SingleReview";
 
 const App = () => {
 	return (
@@ -13,6 +14,7 @@ const App = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/reviews" element={<Reviews />} />
+				<Route path="/reviews/:review_id" element={<SingleReview />} />
 			</Routes>
 		</div>
 	);
